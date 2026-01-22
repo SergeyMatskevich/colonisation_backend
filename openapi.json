@@ -1,0 +1,2104 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Catan Backend",
+    "description": "Backend API for Catan game",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/users/": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Create User",
+        "description": "Создание нового пользователя",
+        "operationId": "create_user_api_v1_users__post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get Users",
+        "description": "Получение списка пользователей",
+        "operationId": "get_users_api_v1_users__get",
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Skip"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  },
+                  "title": "Response Get Users Api V1 Users  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/{user_id}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get User",
+        "description": "Получение пользователя по ID",
+        "operationId": "get_user_api_v1_users__user_id__get",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/games/": {
+      "post": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Create Game",
+        "description": "Создание новой игры",
+        "operationId": "create_game_api_v1_games__post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Get Games",
+        "description": "Получение списка игр",
+        "operationId": "get_games_api_v1_games__get",
+        "parameters": [
+          {
+            "name": "status_filter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Фильтр по статусу игры",
+              "title": "Status Filter"
+            },
+            "description": "Фильтр по статусу игры"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Skip"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Game"
+                  },
+                  "title": "Response Get Games Api V1 Games  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/games/{game_id}": {
+      "get": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Get Game",
+        "description": "Получение игры по ID",
+        "operationId": "get_game_api_v1_games__game_id__get",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Update Game",
+        "description": "Обновление игры",
+        "operationId": "update_game_api_v1_games__game_id__patch",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/games/{game_id}/players/{player_id}": {
+      "post": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Add Player To Game",
+        "description": "Добавление игрока в игру",
+        "operationId": "add_player_to_game_api_v1_games__game_id__players__player_id__post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          },
+          {
+            "name": "player_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Player Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/start": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Start Game",
+        "description": "Запускает игру Catan",
+        "operationId": "start_game_api_v1_catan_start_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartGameRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StartGameResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/state": {
+      "get": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Get Game State",
+        "description": "Получает текущее состояние игры",
+        "operationId": "get_game_state_api_v1_catan__game_id__state_get",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameStateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/roll-dice": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Roll Dice",
+        "description": "Бросает кубики для текущего игрока",
+        "operationId": "roll_dice_api_v1_catan__game_id__roll_dice_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiceRollResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/build-settlement": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Build Settlement",
+        "description": "Строит поселение",
+        "operationId": "build_settlement_api_v1_catan__game_id__build_settlement_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildSettlementRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/build-city": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Build City",
+        "description": "Строит город (улучшает поселение)",
+        "operationId": "build_city_api_v1_catan__game_id__build_city_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildCityRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/build-road": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Build Road",
+        "description": "Строит дорогу",
+        "operationId": "build_road_api_v1_catan__game_id__build_road_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildRoadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/end-turn": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "End Turn",
+        "description": "Заканчивает ход текущего игрока",
+        "operationId": "end_turn_api_v1_catan__game_id__end_turn_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/move-robber": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Move Robber",
+        "description": "Перемещает разбойника",
+        "operationId": "move_robber_api_v1_catan__game_id__move_robber_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MoveRobberRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MoveRobberResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/trade-bank": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Trade With Bank",
+        "description": "Торговля с банком (4:1)",
+        "operationId": "trade_with_bank_api_v1_catan__game_id__trade_bank_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TradeWithBankRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TradeWithBankResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/trade-port": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Trade With Port",
+        "description": "Торговля через порт",
+        "operationId": "trade_with_port_api_v1_catan__game_id__trade_port_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TradeWithPortRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TradeWithPortResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/buy-dev-card": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Buy Dev Card",
+        "description": "Покупает развивающую карту",
+        "operationId": "buy_dev_card_api_v1_catan__game_id__buy_dev_card_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyDevCardResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/play-dev-card": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Play Dev Card",
+        "description": "Играет развивающую карту",
+        "operationId": "play_dev_card_api_v1_catan__game_id__play_dev_card_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayDevCardRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayDevCardResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/create-trade-offer": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Create Trade Offer",
+        "description": "Создает предложение торговли между игроками",
+        "operationId": "create_trade_offer_api_v1_catan__game_id__create_trade_offer_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTradeOfferRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TradeOfferResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/accept-trade-offer": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Accept Trade Offer",
+        "description": "Принимает предложение торговли",
+        "operationId": "accept_trade_offer_api_v1_catan__game_id__accept_trade_offer_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptTradeOfferRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TradeOfferResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/catan/{game_id}/initial-setup": {
+      "post": {
+        "tags": [
+          "catan"
+        ],
+        "summary": "Initial Setup Action",
+        "description": "Действие в начальной фазе (расстановка поселений и дорог)",
+        "operationId": "initial_setup_action_api_v1_catan__game_id__initial_setup_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InitialSetupActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InitialSetupActionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health Check",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AcceptTradeOfferRequest": {
+        "properties": {
+          "trade_offer_id": {
+            "type": "integer",
+            "title": "Trade Offer Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "trade_offer_id"
+        ],
+        "title": "AcceptTradeOfferRequest",
+        "description": "Запрос на принятие предложения торговли"
+      },
+      "BuildCityRequest": {
+        "properties": {
+          "vertex_id": {
+            "type": "integer",
+            "title": "Vertex Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "vertex_id"
+        ],
+        "title": "BuildCityRequest",
+        "description": "Запрос на строительство города"
+      },
+      "BuildResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "resources": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Resources"
+          },
+          "victory_points": {
+            "type": "integer",
+            "title": "Victory Points"
+          },
+          "game_state": {
+            "type": "object",
+            "title": "Game State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "resources",
+          "victory_points",
+          "game_state"
+        ],
+        "title": "BuildResponse",
+        "description": "Ответ на строительство"
+      },
+      "BuildRoadRequest": {
+        "properties": {
+          "vertex1_id": {
+            "type": "integer",
+            "title": "Vertex1 Id"
+          },
+          "vertex2_id": {
+            "type": "integer",
+            "title": "Vertex2 Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "vertex1_id",
+          "vertex2_id"
+        ],
+        "title": "BuildRoadRequest",
+        "description": "Запрос на строительство дороги"
+      },
+      "BuildSettlementRequest": {
+        "properties": {
+          "vertex_id": {
+            "type": "integer",
+            "title": "Vertex Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "vertex_id"
+        ],
+        "title": "BuildSettlementRequest",
+        "description": "Запрос на строительство поселения"
+      },
+      "BuyDevCardResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "card": {
+            "type": "string",
+            "title": "Card"
+          },
+          "revealed": {
+            "type": "boolean",
+            "title": "Revealed"
+          },
+          "resources": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Resources"
+          },
+          "game_state": {
+            "type": "object",
+            "title": "Game State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "card",
+          "revealed",
+          "resources",
+          "game_state"
+        ],
+        "title": "BuyDevCardResponse",
+        "description": "Ответ на покупку развивающей карты"
+      },
+      "CreateTradeOfferRequest": {
+        "properties": {
+          "give_resources": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Give Resources"
+          },
+          "want_resources": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Want Resources"
+          }
+        },
+        "type": "object",
+        "required": [
+          "give_resources",
+          "want_resources"
+        ],
+        "title": "CreateTradeOfferRequest",
+        "description": "Запрос на создание предложения торговли"
+      },
+      "DiceRollResponse": {
+        "properties": {
+          "dice_roll": {
+            "type": "integer",
+            "title": "Dice Roll"
+          },
+          "game_state": {
+            "type": "object",
+            "title": "Game State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "dice_roll",
+          "game_state"
+        ],
+        "title": "DiceRollResponse",
+        "description": "Ответ на бросок кубиков"
+      },
+      "Game": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "max_players": {
+            "type": "integer",
+            "title": "Max Players",
+            "default": 4
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/GameStatus"
+          },
+          "current_player_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Player Id"
+          },
+          "game_state": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Game State"
+          },
+          "players": {
+            "items": {
+              "$ref": "#/components/schemas/GamePlayer"
+            },
+            "type": "array",
+            "title": "Players",
+            "default": []
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "id",
+          "status",
+          "current_player_id",
+          "game_state",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "Game"
+      },
+      "GameCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "max_players": {
+            "type": "integer",
+            "title": "Max Players",
+            "default": 4
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "GameCreate"
+      },
+      "GamePlayer": {
+        "properties": {
+          "player_id": {
+            "type": "integer",
+            "title": "Player Id"
+          },
+          "position": {
+            "type": "integer",
+            "title": "Position"
+          },
+          "victory_points": {
+            "type": "integer",
+            "title": "Victory Points",
+            "default": 0
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "player_id",
+          "position",
+          "id",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "GamePlayer"
+      },
+      "GameStateResponse": {
+        "properties": {
+          "game_state": {
+            "type": "object",
+            "title": "Game State"
+          },
+          "current_player_id": {
+            "type": "integer",
+            "title": "Current Player Id"
+          },
+          "phase": {
+            "type": "string",
+            "title": "Phase"
+          },
+          "winner": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Winner"
+          }
+        },
+        "type": "object",
+        "required": [
+          "game_state",
+          "current_player_id",
+          "phase"
+        ],
+        "title": "GameStateResponse",
+        "description": "Текущее состояние игры"
+      },
+      "GameStatus": {
+        "type": "string",
+        "enum": [
+          "waiting",
+          "in_progress",
+          "finished",
+          "abandoned"
+        ],
+        "title": "GameStatus",
+        "description": "Статусы игры"
+      },
+      "GameUpdate": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GameStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "current_player_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Player Id"
+          },
+          "game_state": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Game State"
+          }
+        },
+        "type": "object",
+        "title": "GameUpdate"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "InitialSetupActionRequest": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "title": "Action"
+          },
+          "vertex_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vertex Id"
+          },
+          "vertex1_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vertex1 Id"
+          },
+          "vertex2_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vertex2 Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action"
+        ],
+        "title": "InitialSetupActionRequest",
+        "description": "Запрос на действие в начальной фазе"
+      },
+      "InitialSetupActionResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "game_state": {
+            "type": "object",
+            "title": "Game State"
+          },
+          "setup_phase": {
+            "type": "object",
+            "title": "Setup Phase"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "game_state",
+          "setup_phase"
+        ],
+        "title": "InitialSetupActionResponse",
+        "description": "Ответ на действие в начальной фазе"
+      },
+      "MoveRobberRequest": {
+        "properties": {
+          "hex_index": {
+            "type": "integer",
+            "title": "Hex Index"
+          },
+          "steal_from_player_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Steal From Player Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "hex_index"
+        ],
+        "title": "MoveRobberRequest",
+        "description": "Запрос на перемещение разбойника"
+      },
+      "MoveRobberResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "new_location": {
+            "type": "integer",
+            "title": "New Location"
+          },
+          "stolen_resource": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stolen Resource"
+          },
+          "game_state": {
+            "type": "object",
+            "title": "Game State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "new_location",
+          "game_state"
+        ],
+        "title": "MoveRobberResponse",
+        "description": "Ответ на перемещение разбойника"
+      },
+      "PlayDevCardRequest": {
+        "properties": {
+          "card_type": {
+            "type": "string",
+            "title": "Card Type"
+          },
+          "card_data": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Card Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "card_type"
+        ],
+        "title": "PlayDevCardRequest",
+        "description": "Запрос на использование развивающей карты"
+      },
+      "PlayDevCardResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "game_state": {
+            "type": "object",
+            "title": "Game State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "game_state"
+        ],
+        "title": "PlayDevCardResponse",
+        "description": "Ответ на использование развивающей карты"
+      },
+      "StartGameRequest": {
+        "properties": {
+          "game_id": {
+            "type": "integer",
+            "title": "Game Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "game_id"
+        ],
+        "title": "StartGameRequest",
+        "description": "Запрос на запуск игры"
+      },
+      "StartGameResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "game_state": {
+            "type": "object",
+            "title": "Game State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "game_state"
+        ],
+        "title": "StartGameResponse",
+        "description": "Ответ на запуск игры"
+      },
+      "TradeOfferResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "trade_offer": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trade Offer"
+          },
+          "game_state": {
+            "type": "object",
+            "title": "Game State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "game_state"
+        ],
+        "title": "TradeOfferResponse",
+        "description": "Ответ на предложение торговли"
+      },
+      "TradeWithBankRequest": {
+        "properties": {
+          "give_resource": {
+            "type": "string",
+            "title": "Give Resource"
+          },
+          "give_amount": {
+            "type": "integer",
+            "title": "Give Amount",
+            "default": 4
+          },
+          "take_resource": {
+            "type": "string",
+            "title": "Take Resource"
+          },
+          "take_amount": {
+            "type": "integer",
+            "title": "Take Amount",
+            "default": 1
+          }
+        },
+        "type": "object",
+        "required": [
+          "give_resource",
+          "take_resource"
+        ],
+        "title": "TradeWithBankRequest",
+        "description": "Запрос на торговлю с банком"
+      },
+      "TradeWithBankResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "resources": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Resources"
+          },
+          "game_state": {
+            "type": "object",
+            "title": "Game State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "resources",
+          "game_state"
+        ],
+        "title": "TradeWithBankResponse",
+        "description": "Ответ на торговлю с банком"
+      },
+      "TradeWithPortRequest": {
+        "properties": {
+          "vertex_id": {
+            "type": "integer",
+            "title": "Vertex Id"
+          },
+          "give_resource": {
+            "type": "string",
+            "title": "Give Resource"
+          },
+          "give_amount": {
+            "type": "integer",
+            "title": "Give Amount"
+          },
+          "take_resource": {
+            "type": "string",
+            "title": "Take Resource"
+          },
+          "take_amount": {
+            "type": "integer",
+            "title": "Take Amount",
+            "default": 1
+          }
+        },
+        "type": "object",
+        "required": [
+          "vertex_id",
+          "give_resource",
+          "give_amount",
+          "take_resource"
+        ],
+        "title": "TradeWithPortRequest",
+        "description": "Запрос на торговлю через порт"
+      },
+      "TradeWithPortResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "resources": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Resources"
+          },
+          "game_state": {
+            "type": "object",
+            "title": "Game State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "resources",
+          "game_state"
+        ],
+        "title": "TradeWithPortResponse",
+        "description": "Ответ на торговлю через порт"
+      },
+      "User": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username",
+          "email",
+          "id",
+          "is_active",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "User",
+        "description": "Схема для возврата пользователя (без пароля)"
+      },
+      "UserCreate": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username",
+          "email",
+          "password"
+        ],
+        "title": "UserCreate"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
